@@ -5,5 +5,5 @@
 *.ear
 .settings
 /target
-/log
+/logs
 /test-output
