@@ -108,40 +108,4 @@ public class HibernateConfiguration {
 		return properties;
 	}
 	
-	public void setDriverClassName(String driverClassName) {
-		this.driverClassName = driverClassName;
-	}
-	
-	public void setDbUrl(String dbUrl) {
-		this.dbUrl = dbUrl;
-	}
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public void setDialect(String dialect) {
-		this.dialect = dialect;
-	}
-	
-	public void setShowSql(String showSql) {
-		this.showSql = showSql;
-	}
-	
-	public void setHbm2ddl(String hbm2ddl) {
-		this.hbm2ddl = hbm2ddl;
-	}
-	
-	public void setMaxTotal(Integer maxTotal) {
-		this.maxTotal = maxTotal;
-	}
-	
-	public void setMinEvictableMillis(Long minEvictableMillis) {
-		this.minEvictableMillis = minEvictableMillis;
-	}
-	
 }

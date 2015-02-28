@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	private static final String USERS_QUERY = "select username, password, (case active when 1 then 'true' else 'false' end) as enabled from users where username=?";
 	
-	private static final String AUTHORITIES_QUERY = "select username, 'ROLE_USER' from users where username=?";
+	private static final String AUTHORITIES_QUERY = "select username, role from users where username=?";
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) {
@@ -61,8 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.tokenValiditySeconds(86400)
 					.key("REMEMBER_ME_KEY")
 					.and()
-					.logout()
-					.logoutUrl("/login?logout")
+					.logout().deleteCookies("JSESSIONID")
+					.logoutSuccessUrl("/login?logout")
 					.and()
 					.sessionManagement()
 					.maximumSessions(1)
