@@ -40,4 +40,12 @@ public class HomeControllerTest extends AbstractTestNGSpringContextTests {
 				.andExpect(content().contentType("text/html;charset=ISO-8859-1"));
 	}
 	
+	@Test
+	public void getLogin() throws Exception {
+		this.mockMvc.perform(get("/login"))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(view().name("user/login"))
+				.andExpect(content().contentType("text/html;charset=ISO-8859-1"));
+	}
 }

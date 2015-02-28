@@ -22,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	private static final Logger logger = Logger.getLogger(SecurityConfiguration.class);
 	
-	private static final String USERS_QUERY = "select username, password, true from users where username=?";
+	private static final String USERS_QUERY = "select username, password, (case active when 1 then 'true' else 'false' end) as enabled from users where username=?";
 	
 	private static final String AUTHORITIES_QUERY = "select username, 'ROLE_USER' from users where username=?";
 	
@@ -47,7 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) {
 		
 		try {
-			http.authorizeRequests()
+			http.csrf().disable()
+					.authorizeRequests()
 					.antMatchers("/login*", "/static/**").permitAll()
 					.antMatchers("/**").authenticated()
 					.and()
