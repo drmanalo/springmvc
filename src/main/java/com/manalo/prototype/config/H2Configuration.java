@@ -18,10 +18,10 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
  * Hypersonic 2 configuration for development environment
  */
 @Configuration
-@Profile("dev")
+@Profile(value = {"dev", "test"})
 public class H2Configuration {
 	
-	@Value("classpath:integration_test.sql")
+	@Value("classpath:sql/schema.sql")
 	private Resource dataScript;
 	
 	private static final Logger logger = Logger.getLogger(H2Configuration.class);
@@ -70,7 +70,6 @@ public class H2Configuration {
 	private DatabasePopulator databasePopulator() {
 		
 		final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		
 		populator.addScript(dataScript);
 		
 		return populator;

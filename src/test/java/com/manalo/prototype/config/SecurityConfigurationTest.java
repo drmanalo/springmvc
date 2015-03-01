@@ -1,4 +1,4 @@
-package com.manalo.prototype.controller;
+package com.manalo.prototype.config;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -23,9 +23,9 @@ import com.manalo.prototype.config.HibernateConfiguration;
 import com.manalo.prototype.config.SecurityConfiguration;
 import com.manalo.prototype.config.WebConfiguration;
 
+@ActiveProfiles("dev")
 @ContextConfiguration(classes = {WebConfiguration.class, H2Configuration.class, HibernateConfiguration.class,
 		SecurityConfiguration.class})
-@ActiveProfiles("dev")
 @WebAppConfiguration
 public class SecurityConfigurationTest extends AbstractTestNGSpringContextTests {
 	
@@ -71,4 +71,5 @@ public class SecurityConfigurationTest extends AbstractTestNGSpringContextTests 
 				.andExpect(authenticated().withUsername("admin").withRoles("ADMIN"))
 				.andExpect(redirectedUrl("/home"));
 	}
+	
 }

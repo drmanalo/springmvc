@@ -27,7 +27,7 @@ import freemarker.template.utility.XmlEscape;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.manalo.prototype.controller"})
+@ComponentScan(basePackages = {"com.manalo.prototype"})
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 	
 	private static final Logger logger = Logger.getLogger(WebConfiguration.class);
@@ -111,4 +111,5 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
+	
 }
