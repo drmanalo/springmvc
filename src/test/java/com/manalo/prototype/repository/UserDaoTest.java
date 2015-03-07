@@ -41,7 +41,7 @@ public class UserDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 	}
 	
 	@Test
-	public void testSave() throws Exception {
+	public void save() {
 		
 		userDao.save(user);
 		User actual = userDao.findByUsername(username);

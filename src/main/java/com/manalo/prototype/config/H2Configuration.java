@@ -2,27 +2,18 @@ package com.manalo.prototype.config;
 
 import java.sql.SQLException;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.Logger;
 import org.h2.tools.Server;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.Resource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 /**
- * Hypersonic 2 configuration for development environment
+ * Hypersonic 2 configuration
  */
 @Configuration
 @Profile(value = {"dev", "test"})
 public class H2Configuration {
-	
-	@Value("classpath:sql/schema.sql")
-	private Resource dataScript;
 	
 	private static final Logger logger = Logger.getLogger(H2Configuration.class);
 	
@@ -41,7 +32,7 @@ public class H2Configuration {
 	 * @return {@link org.h2.tools.Server}
 	 */
 	@Bean(destroyMethod = "shutdown")
-	public Server createWebServer() {
+	public Server h2Server() {
 		
 		final String[] args = {"-web", "-webPort", "11111"};
 		
@@ -54,25 +45,6 @@ public class H2Configuration {
 		}
 		
 		return server;
-	}
-	
-	@Bean
-	public DataSourceInitializer dataSourceInitialiser(BasicDataSource dataSource) {
-		
-		final DataSourceInitializer initialiser = new DataSourceInitializer();
-		
-		initialiser.setDataSource(dataSource);
-		initialiser.setDatabasePopulator(databasePopulator());
-		
-		return initialiser;
-	}
-	
-	private DatabasePopulator databasePopulator() {
-		
-		final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(dataScript);
-		
-		return populator;
 	}
 	
 }

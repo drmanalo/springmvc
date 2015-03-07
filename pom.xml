@@ -12,6 +12,8 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<oracle.jdbc.version>12.1.0.1</oracle.jdbc.version>
+		<project.build.directory>target</project.build.directory>
+		<project.build.finalName>springmvc</project.build.finalName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.2.13.RELEASE</spring.version>
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
@@ -70,6 +72,37 @@
 					</connectors>
 				</configuration>
 			</plugin>
+			<!-- Multiple wars -->
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<classifier>prod</classifier>
+					<webappDirectory>${project.build.directory}/${project.build.finalName}-prod</webappDirectory>
+					<webResources>
+						<resource>
+							<directory>src/env/prod</directory>
+						</resource>
+					</webResources>
+				</configuration>
+				<executions>
+					<execution>
+						<id>package-test</id>
+						<phase>package</phase>
+						<configuration>
+							<classifier>test</classifier>
+							<webappDirectory>${project.build.directory}/${project.build.finalName}-test</webappDirectory>
+							<webResources>
+								<resource>
+									<directory>src/env/test</directory>
+								</resource>
+							</webResources>
+						</configuration>
+						<goals>
+							<goal>war</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -105,6 +138,11 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.180</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>3.1</version>
 		</dependency>
 
 		<!-- Hibernate -->

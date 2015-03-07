@@ -5,10 +5,12 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.flywaydb.core.Flyway;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -51,6 +53,7 @@ public class HibernateConfiguration {
 	private Long minEvictableMillis;
 	
 	private static final String PACKAGES_TO_SCAN = "com.manalo.prototype.entity";
+	private static final String FLYWAY_TABLE_NAME = "FLYWAY";
 	
 	@Bean
 	public BasicDataSource dataSource() {
@@ -68,9 +71,10 @@ public class HibernateConfiguration {
 	}
 	
 	@Bean
+	@DependsOn("flyway")
 	public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
 		
-		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+		final LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
 		
 		sessionFactoryBean.setDataSource(dataSource);
 		sessionFactoryBean.setPackagesToScan(PACKAGES_TO_SCAN);
@@ -82,10 +86,22 @@ public class HibernateConfiguration {
 	@Bean
 	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
 		
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+		final HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory);
 		
 		return transactionManager;
+	}
+	
+	@Bean
+	public Flyway flyway() {
+		
+		final Flyway flyway = new Flyway();
+		
+		flyway.setDataSource(dataSource());
+		flyway.setTable(FLYWAY_TABLE_NAME);
+		flyway.migrate();
+		
+		return flyway;
 	}
 	
 	@Bean
