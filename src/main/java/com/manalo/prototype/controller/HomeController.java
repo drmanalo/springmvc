@@ -9,12 +9,7 @@ public class HomeController {
 	
 	@RequestMapping(value = {"/", "home"}, method = RequestMethod.GET)
 	public String home() {
-		return "user/home";
-	}
-	
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login() {
-		return "user/login";
+		return "home";
 	}
 	
 }

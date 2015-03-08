@@ -1,3 +1,5 @@
+<#import "/spring.ftl" as spring />
+<#include "navigation.ftl"/>
 <#macro header>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,4 +28,5 @@
  <div class="site-wrapper">
   <div class="site-wrapper-inner">
    <div class="cover-container">
+    <@navigation/>
 </#macro>

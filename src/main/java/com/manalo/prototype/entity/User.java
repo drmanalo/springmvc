@@ -1,5 +1,7 @@
 package com.manalo.prototype.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +31,12 @@ public class User {
 	
 	@Column(nullable = false)
 	private String role;
+	
+	@Column
+	private Date created;
+	
+	@Column
+	private Date updated;
 	
 	public Integer getId() {
 		return id;
@@ -68,6 +76,22 @@ public class User {
 	
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public Date getCreated() {
+		return created;
+	}
+	
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+	
+	public Date getUpdated() {
+		return updated;
+	}
+	
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 	
 }

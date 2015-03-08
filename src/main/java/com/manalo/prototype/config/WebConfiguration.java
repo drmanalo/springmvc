@@ -50,7 +50,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	public LocaleResolver localeResolver() {
 		
 		final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-		cookieLocaleResolver.setDefaultLocale(StringUtils.parseLocaleString("en_GB"));
+		cookieLocaleResolver.setDefaultLocale(StringUtils.parseLocaleString("en_PH"));
 		
 		return cookieLocaleResolver;
 	}
@@ -59,7 +59,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	public MessageSource messageSource() {
 		
 		final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasenames("classpath:language/translation", "classpath:language/validation");
+		messageSource.setBasename("classpath:language/translation");
 		/**
 		 * If true, the key of the message will be displayed if the key is not
 		 * found, instead of throwing a NoSuchMessageException

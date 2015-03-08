@@ -1,6 +1,7 @@
 package com.manalo.prototype.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import javax.inject.Inject;
@@ -33,15 +34,9 @@ public class HomeControllerTest extends AbstractTestNGSpringContextTests {
 	@Test
 	public void home() throws Exception {
 		this.mvc.perform(get("/home"))
+				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(view().name("user/home"));
-	}
-	
-	@Test
-	public void login() throws Exception {
-		this.mvc.perform(get("/login"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("user/login"));
+				.andExpect(view().name("home"));
 	}
 	
 }
