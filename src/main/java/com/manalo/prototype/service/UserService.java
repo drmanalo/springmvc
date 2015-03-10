@@ -1,17 +1,16 @@
 package com.manalo.prototype.service;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.manalo.prototype.entity.User;
+import com.manalo.prototype.factory.CurrentDateFactory;
 import com.manalo.prototype.form.UserForm;
 import com.manalo.prototype.repository.UserDao;
 
@@ -20,16 +19,20 @@ import com.manalo.prototype.repository.UserDao;
 public class UserService {
 	
 	@Inject
-	private UserDao userDao;
+	private CurrentDateFactory currentDateFactory;
 	
-	private static final Logger logger = Logger.getLogger(UserService.class);
+	@Inject
+	private PasswordEncoder passwordEncoder;
+	
+	@Inject
+	private UserDao userDao;
 	
 	public Integer save(UserForm userForm) {
 		
 		User user = new User();
 		
-		copyToEntity(user, userForm);
-		user.setCreated(new Date());
+		BeanUtils.copyProperties(userForm, user);
+		user.setCreated(currentDateFactory.instance());
 		
 		return userDao.save(user);
 	}
@@ -38,21 +41,11 @@ public class UserService {
 		
 		User user = userDao.findById(userForm.getId(), User.class);
 		
-		if (user != null) {
-			copyToEntity(user, userForm);
-			user.setUpdated(new Date());
-		}
+		BeanUtils.copyProperties(userForm, user);
+		user.setUpdated(currentDateFactory.instance());
+		user.setPassword(passwordEncoder.encode(userForm.getPassword()));
 		
 		userDao.update(user);
-	}
-	
-	private void copyToEntity(User user, UserForm userForm) {
-		
-		try {
-			BeanUtils.copyProperties(user, userForm);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			logger.warn("Unable to copy userForm to user entity", e);
-		}
 	}
 	
 	public List<User> list() {
@@ -62,13 +55,10 @@ public class UserService {
 	public UserForm loadUser(Integer id) {
 		
 		UserForm userForm = new UserForm();
+		
 		User user = userDao.findById(id, User.class);
 		
-		try {
-			BeanUtils.copyProperties(userForm, user);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			logger.warn("Unable to copy user entity to userForm", e);
-		}
+		BeanUtils.copyProperties(user, userForm);
 		
 		return userForm;
 	}
@@ -83,6 +73,14 @@ public class UserService {
 		User user = userDao.findById(id, User.class);
 		userDao.delete(user);
 		return user.getUsername();
+	}
+	
+	public void setCurrentDateFactory(CurrentDateFactory currentDateFactory) {
+		this.currentDateFactory = currentDateFactory;
+	}
+	
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 	public void setUserDao(UserDao userDao) {

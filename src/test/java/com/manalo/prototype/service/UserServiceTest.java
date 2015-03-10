@@ -4,16 +4,23 @@ import static org.mockito.Mockito.*;
 import static org.fest.assertions.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
 import com.manalo.prototype.entity.User;
+import com.manalo.prototype.factory.CurrentDateFactory;
 import com.manalo.prototype.form.UserForm;
 import com.manalo.prototype.repository.UserDao;
 
 public class UserServiceTest {
+	
+	private CurrentDateFactory currentDateFactory;
+	private Date now = new Date();
+	private PasswordEncoder passwordEncoder;
 	
 	private UserDao userDao;
 	private UserService userService;
@@ -28,12 +35,18 @@ public class UserServiceTest {
 	public void update() {
 		
 		Integer id = 23;
-		User user = new User();
+		String password = "unsecured";
 		
+		UserForm form = new UserForm();
+		form.setId(id);
+		form.setPassword(password);
+		
+		User user = new User();
 		when(userDao.findById(id, User.class)).thenReturn(user);
 		
-		userService.update(new UserForm());
-		verify(userDao).update(any(User.class));
+		userService.update(form);
+		verify(userDao).update(user);
+		verify(passwordEncoder).encode(password);
 	}
 	
 	@Test
@@ -88,9 +101,16 @@ public class UserServiceTest {
 	
 	@BeforeMethod
 	public void beforeMethod() {
+		
+		currentDateFactory = mock(CurrentDateFactory.class);
+		passwordEncoder = mock(PasswordEncoder.class);
 		userDao = mock(UserDao.class);
+		
 		userService = new UserService();
+		userService.setCurrentDateFactory(currentDateFactory);
+		userService.setPasswordEncoder(passwordEncoder);
 		userService.setUserDao(userDao);
+		
+		when(currentDateFactory.instance()).thenReturn(now);
 	}
-	
 }

@@ -27,6 +27,12 @@
 				<@spring.formSingleSelect "form.role", roleMap, "class='form-control'"/>
 			</div>
 		</div>
+		<div class="form-group">
+    		<label for="role" class="col-sm-2 control-label"><@spring.message "user.active"/></label>
+			<div class="col-sm-4">
+				<@spring.formCheckbox "form.active"/>
+			</div>
+		</div>
   		<div class="form-group">
     		<div class="col-sm-offset-2 col-sm-3">
       			<button type="submit" class="btn btn-default"><@spring.message "user.save"/></button>
