@@ -2,7 +2,6 @@
 <#include "/macros/navigation.ftl"/>
 <#include "/macros/footer.ftl"/>
 <@header/>
-<@navigation/>
 <div class="form-signin">
 	<form name="f" method="post" action="login">
 		<#if RequestParameters.error??>
@@ -18,8 +17,8 @@
 		<input type="password" class="form-control" placeholder='<@spring.message "user.password"/>' name="password" />
 		<label for="remember_me" style="font-weight:normal;"><@spring.message "remember.me"/></label>
 		<input id="remember_me" name="remember-me" type="checkbox" style="margin:5px 2px;"/>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
 		<button class="btn btn-lg btn-primary btn-block" type="submit"><@spring.message "login"/></button>
 	</form>
 </div>
-<@footer/>
 <@footer/>

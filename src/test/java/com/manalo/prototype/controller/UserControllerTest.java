@@ -37,6 +37,12 @@ public class UserControllerTest {
 	}
 	
 	@Test
+	public void logout() {
+		String actual = controller.logout();
+		assertThat(actual).isEqualTo(ControllerConstant.USER_LOGOUT);
+	}
+	
+	@Test
 	public void listUsers() {
 		
 		ModelAndView actual = controller.listUsers();

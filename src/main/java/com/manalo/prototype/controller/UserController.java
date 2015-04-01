@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -30,6 +31,12 @@ public class UserController {
 		return ControllerConstant.USER_LOGIN;
 	}
 	
+	@RequestMapping(value = "logout", method = RequestMethod.POST)
+	public String logout() {
+		return ControllerConstant.USER_LOGOUT;
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "listUsers", method = RequestMethod.GET)
 	public ModelAndView listUsers() {
 		
@@ -40,6 +47,7 @@ public class UserController {
 		return mav;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public ModelAndView addUser() {
 		
@@ -49,6 +57,7 @@ public class UserController {
 		return setMav(userForm);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "editUser", method = RequestMethod.GET)
 	public ModelAndView editUser(Integer id) {
 		
@@ -58,6 +67,7 @@ public class UserController {
 		return setMav(userForm);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "saveUser", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute("form") @Valid UserForm userForm, Errors errors, Model model,
 			RedirectAttributes flash) {
@@ -82,6 +92,7 @@ public class UserController {
 		return "redirect:listUsers";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
 	public String deleteUser(Integer id, RedirectAttributes flash) {
 		String username = userService.delete(id);

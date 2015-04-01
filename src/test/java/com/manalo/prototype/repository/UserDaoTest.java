@@ -50,7 +50,7 @@ public class UserDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 		assertThat(actual.getId()).isEqualTo(50);
 		assertThat(actual.getUsername()).isEqualTo(username);
 		assertThat(actual.getPassword()).isEqualTo(password);
-		assertThat(actual.isActive()).isEqualTo(active);
+		assertThat(actual.isActive()).isTrue();
 		assertThat(actual.getRole()).isEqualTo(role);
 	}
 	

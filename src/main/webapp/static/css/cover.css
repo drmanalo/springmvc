@@ -65,7 +65,7 @@ body {
 	margin-left: 20px;
 }
 
-.masthead-nav>li>a {
+.masthead-nav>li>a, #nav-logout {
 	padding-right: 0;
 	padding-left: 0;
 	font-size: 16px;
@@ -85,6 +85,10 @@ body {
 	{
 	color: #fff;
 	border-bottom-color: #fff;
+}
+
+#nav-logout{
+	background-color: transparent;
 }
 
 @media ( min-width : 768px) {

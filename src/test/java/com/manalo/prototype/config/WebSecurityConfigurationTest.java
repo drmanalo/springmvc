@@ -20,14 +20,14 @@ import org.testng.annotations.Test;
 
 import com.manalo.prototype.config.H2Configuration;
 import com.manalo.prototype.config.HibernateConfiguration;
-import com.manalo.prototype.config.SecurityConfiguration;
+import com.manalo.prototype.config.WebSecurityConfiguration;
 import com.manalo.prototype.config.WebConfiguration;
 
 @ActiveProfiles("dev")
 @ContextConfiguration(classes = {WebConfiguration.class, H2Configuration.class, HibernateConfiguration.class,
-		SecurityConfiguration.class})
+		WebSecurityConfiguration.class})
 @WebAppConfiguration
-public class SecurityConfigurationTest extends AbstractTestNGSpringContextTests {
+public class WebSecurityConfigurationTest extends AbstractTestNGSpringContextTests {
 	
 	@Inject
 	private FilterChainProxy springSecurityFilterChain;
