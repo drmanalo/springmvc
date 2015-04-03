@@ -7,6 +7,7 @@
 	<form method="post" action="saveUser" modelAttribute="form" class="form-horizontal">
 		<@spring.formHiddenInput "form.id"/>
 		<@spring.formHiddenInput "form.action"/>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		<div class="form-group">
     		<label for="username" class="col-sm-2 control-label"><@spring.message "user.email"/></label>
   			<div class="col-sm-4">
