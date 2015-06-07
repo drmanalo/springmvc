@@ -9,8 +9,8 @@
 	<url>http://dhon.herokuapp.com</url>
 
 	<properties>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<oracle.jdbc.version>12.1.0.1</oracle.jdbc.version>
 		<project.build.directory>target</project.build.directory>
 		<project.build.finalName>springmvc</project.build.finalName>
@@ -28,14 +28,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -74,8 +66,11 @@
 			</plugin>
 			<!-- Multiple wars -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
 				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<classifier>prod</classifier>
 					<webappDirectory>${project.build.directory}/${project.build.finalName}-prod</webappDirectory>
 					<webResources>
@@ -227,7 +222,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.5.2</version>
+			<version>6.8.13</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
